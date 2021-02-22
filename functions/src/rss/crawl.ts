@@ -11,6 +11,7 @@ type Feed = {
   origin: string;
   rssRef: FirebaseFirestore.DocumentReference;
   timestamp: FirebaseFirestore.FieldValue;
+  keywordRef: Array<FirebaseFirestore.DocumentReference>;
 };
 
 type RSSItem = {
@@ -45,6 +46,10 @@ export const rssCrawl = async (): Promise<Array<Feed>> => {
         });
       });
     });
+  
+  const keywordList = (await db.collection("keyword").get()).docs.map(
+    (doc) => doc.id
+  );
 
   for (const rss of rssList) {
     const feeds = await getFeeds(rss);
@@ -61,6 +66,14 @@ export const rssCrawl = async (): Promise<Array<Feed>> => {
     });
     for (const feed of feeds) {
       if (!feedLinkHistory.includes(feed.link)) {
+        const feedKeywordRefs: Array<FirebaseFirestore.DocumentReference> = [];
+        keywordList.map((keyword) => {
+          if (feed.title.includes(keyword)) {
+            feedKeywordRefs.push(db.collection("keyword").doc(keyword));
+          }
+        });
+        feed.keywordRef = feedKeywordRefs;
+
         await db.collection("item").add(feed);
         newItemList.push(feed);
       }
@@ -87,7 +100,6 @@ const getFeeds = async (rss: RSSItem): Promise<Array<Feed>> => {
   const feedString = iconv.decode(rawBuffer, rss.encoding);
 
   const feed = await parser.parseString(feedString);
-  // const feed = await parser.parseURL(rss.rssLink);
 
   return feed.items.map((item) => {
     return {
@@ -96,6 +108,7 @@ const getFeeds = async (rss: RSSItem): Promise<Array<Feed>> => {
       origin: rss.rssId,
       rssRef: admin.firestore().collection("rss").doc(rss.rssId),
       timestamp: FieldValue.serverTimestamp(),
+      keywordRef: [],
     };
   });
 };

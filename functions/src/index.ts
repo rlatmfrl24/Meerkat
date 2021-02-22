@@ -8,6 +8,15 @@ admin.initializeApp(functions.config().firebase);
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
+exports.scheduledCrawlRss = functions.pubsub
+  .schedule("every 1 hours")
+  .onRun(async (context) => {
+    const crawledNews = await crawl.rssCrawl();
+    return {
+      msg: crawledNews.length + " Articles crawled from RSS",
+    };
+  });
+
 export const crawlRssFeeds = functions.https.onRequest(
   async (request, response) => {
     functions.logger.info("[Test]::Feed ParserTest Log!");
