@@ -8,11 +8,6 @@ admin.initializeApp(functions.config().firebase);
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-});
-
 export const crawlRssFeeds = functions.https.onRequest(
   async (request, response) => {
     functions.logger.info("[Test]::Feed ParserTest Log!");
@@ -26,9 +21,19 @@ export const testRssParsing = functions.https.onRequest(
   }
 );
 
-export const testFoogleFunctions = functions.https.onRequest(
+export const createKeyword = functions.https.onRequest(
   async (request, response) => {
-    await foogle.testFoogle("전기차");
-    response.send("check log");
+    functions.logger.info(request.query.keyword);
+    if (request.query.keyword == null) {
+      response.send({
+        msg: "This Functions requires Keyword",
+        example:
+          "https://us-central1-meerkat-smtp.cloudfunctions.net/createKeyword?keyword=주식",
+      });
+    } else {
+      response.send(
+        await foogle.createKeyword(request.query.keyword.toString())
+      );
+    }
   }
 );
