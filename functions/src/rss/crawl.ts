@@ -74,7 +74,7 @@ export const testRssParsing = async (url: string) => {
   return feed.items;
 };
 
-export const getFeeds = async (rss: RSSItem): Promise<Array<Feed>> => {
+const getFeeds = async (rss: RSSItem): Promise<Array<Feed>> => {
   // const rawFeedString = (await axios.default.get(rss.rssLink)).data;
   const rawBuffer = (
     await axios.default({
