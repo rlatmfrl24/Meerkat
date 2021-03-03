@@ -15,7 +15,7 @@ function Article(article) {
       selectArticle(article)
     }}>
       <Item.Content>
-        <Item.Header>{article.title}</Item.Header>
+        <Item.Header as='h4'>{article.title}</Item.Header>
         <Item.Meta>
           <span className="origin">{article.origin}</span>
         </Item.Meta>

@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/functions'
 
 export async function getArticleList() {
     const db = firebase.firestore()
@@ -22,6 +23,41 @@ export async function getArticleList() {
         itemList.push(item)
     }
     return itemList
+}
+
+export async function getKeywordList() {
+    const db = firebase.firestore()
+    const keywordList = []
+    const keywordsSnapshot = await db.collection('keyword').get()
+    for (const keywordRef of keywordsSnapshot.docs) {
+        
+        const keywordData = {
+            id: keywordRef.id,
+            relatedStock: keywordRef.data().relatedStock
+        }
+        keywordList.push(keywordData)
+    }
+    return keywordList
+}
+
+export async function removeKeyword(id){
+    const db = firebase.firestore()
+    return await db.collection('keyword').doc(id).delete()
+}
+
+export async function addKeyword(id){
+    const addFunction = firebase.functions().httpsCallable('createKeyword')
+    addFunction().then((result)=> {
+        console.log(result.data)
+    })
+}
+
+export async function addRelatedStock(){
+
+}
+
+export async function removeRelatedStock(){
+
 }
 
 export async function loadStocksByKeywords(keywords) {

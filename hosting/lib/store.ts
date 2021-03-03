@@ -10,3 +10,7 @@ export const selectedArticleState = atom({
     default: '',
 })
   
+export const keywordListState = atom({
+    key: 'keywordList',
+    default: []
+})

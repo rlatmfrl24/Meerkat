@@ -46,3 +46,7 @@ export const createKeyword = functions.https.onRequest(
     }
   }
 );
+
+export const addKeyword = functions.https.onCall(async (data, context) => {
+  return await foogle.createKeyword(data.keyword)
+})
