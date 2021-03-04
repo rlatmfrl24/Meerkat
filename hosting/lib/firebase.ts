@@ -46,10 +46,12 @@ export async function removeKeyword(id){
 }
 
 export async function addKeyword(id){
-    const addFunction = firebase.functions().httpsCallable('createKeyword')
-    addFunction().then((result)=> {
-        console.log(result.data)
-    })
+    const addFunction = firebase.functions().httpsCallable('addKeyword')
+    const result = await addFunction({keyword:id})
+    return {
+        id: id,
+        relatedStock: result.data
+    }
 }
 
 export async function addRelatedStock(){

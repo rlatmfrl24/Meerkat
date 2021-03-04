@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { stocksState } from "../lib/store";
-import { Item, Label, Grid, Button, Segment, Accordion, List, Icon, SemanticCOLORS } from 'semantic-ui-react'
-import { loadStocksByKeywords } from '../lib/firebase'
 import { useRecoilValue } from 'recoil'
+import { stocksState } from "../../lib/store";
+import { loadStocksByKeywords } from '../../lib/firebase'
+import { Item, Label, Grid, Button, Segment, Accordion, List, Icon, SemanticCOLORS } from 'semantic-ui-react'
 
 
 function StockData(data) {

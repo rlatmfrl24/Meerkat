@@ -14,8 +14,8 @@ import {
 import { useSetRecoilState } from 'recoil'
 import { keywordListState } from '../lib/store'
 import { getArticleList, getKeywordList } from "../lib/firebase";
-import NewsWithStock from "../components/home";
-import KeywordManger from "../components/keyword"
+import NewsWithStock from "../components/home/home";
+import KeywordManger from "../components/keyword/keyword"
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";

@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { stocksState, selectedArticleState } from "../lib/store";
-import { getArticleList } from "../lib/firebase";
+import { stocksState, selectedArticleState } from "../../lib/store";
+import { getArticleList } from "../../lib/firebase";
 import {
   Container,
   Header,
@@ -12,15 +12,15 @@ import {
   Menu,
   Tab,
 } from "semantic-ui-react";
-import { ArticleList } from "../components/article";
-import { Stocks } from "../components/stock";
+import { ArticleList } from "./article";
+import { Stocks } from "./stock";
 
 export default function NewsWithStock({ itemList }) {
   const [selectedArticle, articleSelect] = useRecoilState(selectedArticleState);
   const stocksData = useRecoilValue(stocksState);
 
   return (
-    <Tab.Pane attched="false" as="Container">
+    <Tab.Pane attched="false" as="div">
       <Grid column={2} >
         <Grid.Row>
           <Grid.Column width={12} style={{marginTop:"1rem"}}>
