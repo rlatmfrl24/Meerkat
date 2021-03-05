@@ -82,7 +82,7 @@ export const deleteStockFromKeyword = async (
 
 export const addStockToKeyword = async (keyword: string, stockData: Stock) => {
   const db = admin.firestore();
-  const keywordRef = db.collection("keywords").doc(keyword)
+  const keywordRef = db.collection("keyword").doc(keyword);
   const keywordData = await keywordRef.get();
   const newStockData = [
     stockData,
