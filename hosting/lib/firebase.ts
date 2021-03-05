@@ -54,8 +54,15 @@ export async function addKeyword(id){
     }
 }
 
-export async function addRelatedStock(){
-
+export async function addRelatedStock(keyword, stockData){
+    const addStockFunction = firebase.functions().httpsCallable("addStockToKeyword")
+    const targetStock = {
+        keyword: keyword,
+        stock: stockData
+    }
+    const result = await addStockFunction(targetStock)
+    console.log(result)
+    return targetStock
 }
 
 export async function removeRelatedStock(keyword, stock){

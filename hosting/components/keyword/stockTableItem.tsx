@@ -16,7 +16,7 @@ export default function RelatedStockTableItem(props) {
     let color = getColorByInfluenceFactor(props.stock.influenceFactor);
   
     return (
-      <Table.Row key={props.idx}>
+      <Table.Row>
         <Table.Cell>
           <Header as="h4">{props.stock.stockName}</Header>
         </Table.Cell>
