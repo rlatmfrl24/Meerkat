@@ -112,7 +112,7 @@ export default function RelatedStocks() {
                           placeholder="Select Influence Factor"
                           options={influenceFactorOptions}
                           onChange={(event, data) => {
-                            setNewStockInfluenceFactor(data.value);
+                            setNewStockInfluenceFactor(data.value as string);
                           }}
                         />
                       </Form.Field>

@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-function DebugObserver(): React.Node {
+function DebugObserver() {
   const snapshot = useRecoilSnapshot();
   useEffect(() => {
     console.debug('The following atoms were modified:');

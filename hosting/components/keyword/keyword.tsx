@@ -96,7 +96,7 @@ export default function KeywordManger({ keywords }) {
             </List>
           </Grid.Column>
           <Grid.Column width={13}>
-            {selectedKeyword.id == "" ? <></> : <RelatedStocks />}
+            {selectedKeyword == "" ? <></> : <RelatedStocks />}
           </Grid.Column>
         </Grid.Row>
       </Grid>

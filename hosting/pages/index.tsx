@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import { GetStaticProps } from "next"
 import {
   Container,
   Header,
