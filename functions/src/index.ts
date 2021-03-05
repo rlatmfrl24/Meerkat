@@ -56,3 +56,9 @@ export const deleteStockFromKeyword = functions.https.onCall(
     return await foogle.deleteStockFromKeyword(data.keyword, data.stockName);
   }
 );
+
+export const addStockToKeyword = functions.https.onCall(
+  async (data, context) => {
+    return await foogle.addStockToKeyword(data.keyword, data.stock);
+  }
+);

@@ -66,21 +66,29 @@ export const deleteStockFromKeyword = async (
   keyword: string,
   stockName: string
 ) => {
-  type stock = {
-    stockName: string;
-    stockId: string;
-    newCount: number;
-    influenFactor: string;
-  };
+
 
   const db = admin.firestore();
   const keywordRef = db.collection("keyword").doc(keyword);
   const keywordData = await keywordRef.get();
   const stockData = keywordData.data()?.relatedStock;
   const newStockData = stockData.filter(
-    (item: stock) => item.stockName != stockName
+    (item: Stock) => item.stockName != stockName
   );
   return await keywordRef.update({
     relatedStock: newStockData,
   });
 };
+
+export const addStockToKeyword = async (keyword: string, stockData: Stock) => {
+  const db = admin.firestore();
+  const keywordRef = db.collection("keywords").doc(keyword)
+  const keywordData = await keywordRef.get();
+  const newStockData = [
+    stockData,
+    ...keywordData.data()?.relatedStock
+  ]
+  return await keywordRef.update({
+    relatedStock: newStockData
+  })
+}
