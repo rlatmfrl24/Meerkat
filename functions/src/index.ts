@@ -48,5 +48,11 @@ export const createKeyword = functions.https.onRequest(
 );
 
 export const addKeyword = functions.https.onCall(async (data, context) => {
-  return await foogle.createKeyword(data.keyword)
-})
+  return await foogle.createKeyword(data.keyword);
+});
+
+export const deleteStockFromKeyword = functions.https.onCall(
+  async (data, context) => {
+    return await foogle.deleteStockFromKeyword(data.keyword, data.stockName);
+  }
+);
