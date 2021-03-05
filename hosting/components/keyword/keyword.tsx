@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   Tab,
   Grid,
@@ -9,13 +9,12 @@ import {
   Header,
   Modal,
   Input,
-  Dimmer,
-  Loader,
 } from "semantic-ui-react";
 import {
   keywordListState,
   selectedKeywordState,
   selectedKeywordWithStockState,
+  loaderState
 } from "../../lib/store";
 import { removeKeyword, addKeyword } from "../../lib/firebase";
 import RelatedStocks from "./relatedStocks"
@@ -23,17 +22,13 @@ import RelatedStocks from "./relatedStocks"
 export default function KeywordManger({ keywords }) {
   const [keywordList, setKeywordList] = useRecoilState(keywordListState);
   const [selectedKeyword, selectKeyword] = useRecoilState(selectedKeywordState);
+  const setIsLoading = useSetRecoilState(loaderState)
 
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [createKeyword, setCreateKeyword] = useState("");
 
   return (
     <Tab.Pane attched="false" as="div">
-      <Dimmer active={isLoading}>
-        <Loader>Wait for Keyword Creation</Loader>
-      </Dimmer>
-
       <Grid column={2} divided>
         <Grid.Row>
           <Grid.Column width={3}>

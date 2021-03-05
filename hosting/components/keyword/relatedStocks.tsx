@@ -1,15 +1,19 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Button, Header, Table } from "semantic-ui-react";
 import {
+  keywordListState,
   selectedKeywordState,
   selectedKeywordWithStockState,
+  loaderState
 } from "../../lib/store";
 import RelatedStockTableItem from "./stockTableItem"
-
+import { removeKeyword } from "../../lib/firebase"
 
 export default function RelatedStocks() {
   const [selectedKeyword, selectKeyword] = useRecoilState(selectedKeywordState);
   const keywordWithStock = useRecoilValue(selectedKeywordWithStockState);
+  const setIsLoading = useSetRecoilState(loaderState)
+  const [keywordList, setKeywordList] = useRecoilState(keywordListState)
 
   return (
     <>
@@ -30,12 +34,12 @@ export default function RelatedStocks() {
             onClick={async () => {
               setIsLoading(true);
               await removeKeyword(selectedKeyword);
-              selectKeyword("");
               setKeywordList(
-                keywords.filter((item) => {
+                keywordList.filter((item) => {
                   return item.id != selectedKeyword;
                 })
               );
+              selectKeyword("")
               setIsLoading(false);
             }}
           >
@@ -47,7 +51,8 @@ export default function RelatedStocks() {
         <Table.Body>
           {keywordWithStock.relatedStock != undefined ? (
             keywordWithStock.relatedStock.map((stock, idx) => {
-              return RelatedStockTableItem(stock, idx);
+              return <RelatedStockTableItem keyword={keywordWithStock.id} stock={stock} idx={idx} />
+              // return RelatedStockTableItem(keywordWithStock.id, stock, idx);
             })
           ) : (
             <></>

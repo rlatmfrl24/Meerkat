@@ -58,8 +58,15 @@ export async function addRelatedStock(){
 
 }
 
-export async function removeRelatedStock(){
-
+export async function removeRelatedStock(keyword, stock){
+    const removeStockFunction = firebase.functions().httpsCallable('deleteStockFromKeyword')
+    const targetStock = {
+        keyword: keyword,
+        stockName: stock
+    }
+    const result = await removeStockFunction(targetStock)
+    console.log(result)
+    return targetStock
 }
 
 export async function loadStocksByKeywords(keywords) {

@@ -10,9 +10,11 @@ import {
   Item,
   Menu,
   Tab,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
-import { useSetRecoilState } from 'recoil'
-import { keywordListState } from '../lib/store'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { keywordListState, loaderState } from '../lib/store'
 import { getArticleList, getKeywordList } from "../lib/firebase";
 import NewsWithStock from "../components/home/home";
 import KeywordManger from "../components/keyword/keyword"
@@ -32,16 +34,18 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  // firebase.analytics()
 }
 
-export default function Home({ itemList, keywordList }) {
 
-  const setKeywordList = useSetRecoilState(keywordListState)
-  setKeywordList(keywordList)
+export default function Home({ articles, keywords }) {
+  const isLoading = useRecoilValue(loaderState)
+  const [keywordList, setKeywordList] = useRecoilState(keywordListState)
+  if (keywordList.length == 0) {
+    setKeywordList(keywords)
+  }
 
   const panes = [
-    { menuItem: "Home", render: () => <NewsWithStock itemList={itemList} /> },
+    { menuItem: "Home", render: () => <NewsWithStock itemList={articles} /> },
     { menuItem: "Keyword", render: ()=> <KeywordManger keywords={keywordList} /> }
   ];
 
@@ -59,6 +63,9 @@ export default function Home({ itemList, keywordList }) {
         </Container>
       </Menu>
       <Container style={{ marginTop: "6em", marginBottom: "3em" }}>
+        <Dimmer active={isLoading}>
+          <Loader>Loading</Loader>
+        </Dimmer>
         <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
       </Container>
     </div>
@@ -66,13 +73,13 @@ export default function Home({ itemList, keywordList }) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const itemList = await getArticleList();
-  const keywordList = await getKeywordList();
+  const articles = await getArticleList();
+  const keywords = await getKeywordList();
 
   return {
     props: {
-      itemList,
-      keywordList
+      articles,
+      keywords
     },
   };
 };

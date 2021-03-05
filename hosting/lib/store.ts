@@ -1,5 +1,10 @@
 import { atom, selector } from "recoil";
 
+export const loaderState = atom({
+  key: "isLoading",
+  default: false
+})
+
 export const stocksState = atom({
   key: "stocks",
   default: {},
