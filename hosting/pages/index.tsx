@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import { GetStaticProps } from "next"
+import { GetStaticProps, GetServerSideProps } from "next"
 import {
   Container,
   Header,
@@ -73,7 +73,19 @@ export default function Home({ articles, keywords }) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const articles = await getArticleList();
+//   const keywords = await getKeywordList();
+
+//   return {
+//     props: {
+//       articles,
+//       keywords
+//     },
+//   };
+// };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const articles = await getArticleList();
   const keywords = await getKeywordList();
 
