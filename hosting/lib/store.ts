@@ -21,14 +21,6 @@ export const keywordListState = atom({
   default: [],
 });
 
-export const articleListState = atom({
-  key: "articleList",
-  default: selector({
-    key: "articleList/Default",
-    get: () => getArticleList()
-  })
-})
-
 export const selectedKeywordState = atom({
   key: "selectedKeyword",
   default: "",
