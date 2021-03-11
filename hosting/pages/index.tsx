@@ -76,7 +76,7 @@ export default function Home({articles, keywords}) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const articles = await getArticleList();
   const keywords = await getKeywordList();
-
+  console.log(1)
   return {
     props: {
       articles,
@@ -84,15 +84,3 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const articles = await getArticleList();
-//   const keywords = await getKeywordList();
-
-//   return {
-//     props: {
-//       articles,
-//       keywords
-//     },
-//   };
-// };
