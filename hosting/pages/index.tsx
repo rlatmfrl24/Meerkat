@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useState } from "react";
-import { GetStaticProps, GetServerSideProps } from "next"
 import {
   Container,
   Header,
@@ -15,7 +14,7 @@ import {
   Loader
 } from "semantic-ui-react";
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { keywordListState, loaderState } from '../lib/store'
+import { articleListState, keywordListState, loaderState } from '../lib/store'
 import { getArticleList, getKeywordList } from "../lib/firebase";
 import NewsWithStock from "../components/home/home";
 import KeywordManger from "../components/keyword/keyword"
@@ -38,7 +37,7 @@ if (!firebase.apps.length) {
 }
 
 
-export default function Home({ articles, keywords }) {
+export default function Home({articles, keywords}) {
   const isLoading = useRecoilValue(loaderState)
   const [keywordList, setKeywordList] = useRecoilState(keywordListState)
   if (keywordList.length == 0) {
@@ -46,8 +45,8 @@ export default function Home({ articles, keywords }) {
   }
 
   const panes = [
-    { menuItem: "Home", render: () => <NewsWithStock itemList={articles} /> },
-    { menuItem: "Keyword", render: ()=> <KeywordManger keywords={keywordList} /> }
+    { menuItem: "Home", render: () => <NewsWithStock itemList={articles}/> },
+    { menuItem: "Keyword", render: ()=> <KeywordManger  keywords={keywords}/> }
   ];
 
   return (
