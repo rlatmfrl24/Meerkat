@@ -4,11 +4,11 @@ import * as foogle from "./rss/foogle";
 import * as admin from "firebase-admin";
 const { default: next } = require("next");
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== "production";
 const server = next({
   dev: isDev,
-  conf: { idstDir: '.next' },
-})
+  conf: { idstDir: ".next" },
+});
 const nextjsHandle = server.getRequestHandler();
 
 exports.nextServer = functions.https.onRequest((req, res)=> {
