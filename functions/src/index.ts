@@ -2,6 +2,19 @@ import * as functions from "firebase-functions";
 import * as crawl from "./rss/crawl";
 import * as foogle from "./rss/foogle";
 import * as admin from "firebase-admin";
+const { default: next } = require("next");
+
+const isDev = process.env.NODE_ENV !== "production";
+const server = next({
+  dev: isDev,
+  conf: { idstDir: ".next" },
+});
+const nextjsHandle = server.getRequestHandler();
+
+exports.nextServer = functions.https.onRequest((req, res)=> {
+  return server.prepare().then(()=>nextjsHandle(req, res))
+})
+
 
 admin.initializeApp(functions.config().firebase);
 

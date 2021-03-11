@@ -1,4 +1,5 @@
 import { atom, selector } from "recoil";
+import { getArticleList } from "./firebase"
 
 export const loaderState = atom({
   key: "isLoading",
