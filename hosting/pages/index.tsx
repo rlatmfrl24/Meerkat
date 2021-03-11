@@ -13,8 +13,9 @@ import {
   Dimmer,
   Loader
 } from "semantic-ui-react";
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { articleListState, keywordListState, loaderState } from '../lib/store'
+import { GetServerSideProps } from "next"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { keywordListState, loaderState } from '../lib/store'
 import { getArticleList, getKeywordList } from "../lib/firebase";
 import NewsWithStock from "../components/home/home";
 import KeywordManger from "../components/keyword/keyword"
